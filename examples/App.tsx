@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef } from "react";
 import { View } from "react-native";
-import { RefsInterface, SupsisVisitor } from "supsis-visitor-rn";
+import { RefsInterface, SupsisVisitor } from "@supsis/visitor-rn";
 
 export const App: FC = () => {
 	const supsisRef = useRef<RefsInterface>(null);
