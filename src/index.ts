@@ -1,2 +1,5 @@
-export { default as SupsisVisitor } from "./component";
-export { RefsInterface } from "./refs-interface";
+import SupsisVisitor from "./component";
+import { RefsInterface } from "./refs-interface";
+
+export { SupsisVisitor };
+export type { RefsInterface };

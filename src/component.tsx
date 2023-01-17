@@ -1,12 +1,4 @@
-import React, {
-	forwardRef,
-	ForwardRefRenderFunction,
-	useCallback,
-	useImperativeHandle,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from "react";
+import React, { forwardRef, ForwardRefRenderFunction, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { SafeAreaView } from "react-native";
 import WebView from "react-native-webview";
 import { styles } from "./supsis-styles";
@@ -47,9 +39,17 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 		else add2Buff(fn);
 	};
 
+	const autoLogin = (payload: ObjectLike) => {
+		const body = { initialMessage: "", loginData: JSON.stringify(payload) };
+		const fn = () => inject("auto-login", convertToString(body));
+		if (loaded) fn();
+		else add2Buff(fn);
+	};
+
 	useImperativeHandle(ref, () => ({
 		setUserData,
 		setDepartment,
+		autoLogin,
 		open: () => setVisible(true),
 		close: () => setVisible(false),
 	}));
@@ -58,15 +58,15 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 		setTimeout(() => setLoaded(true), 1000);
 	};
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		if (loaded && buff.length > 0) {
 			buff.map((b) => b());
 			setBuff([]);
 		}
 	}, [loaded]);
 
-	const WebMemo = useCallback(
-		() => (
+	return (
+		<SafeAreaView style={[styles.container, { display: visible ? "flex" : "none" }]}>
 			<WebView
 				ref={webViewRef}
 				source={{ uri }}
@@ -78,13 +78,6 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 				allowsFullscreenVideo
 				allowFileAccess
 			/>
-		),
-		[],
-	);
-
-	return (
-		<SafeAreaView style={[styles.container, { display: visible ? "flex" : "none" }]}>
-			<WebMemo />
 		</SafeAreaView>
 	);
 };
