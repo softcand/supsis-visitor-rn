@@ -1,3 +1,6 @@
+
+
 export interface PropsInterface {
-	domainName: string;
+	domainName?: string;
+	environment?: string;
 }

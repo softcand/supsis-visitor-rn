@@ -7,9 +7,22 @@ import { ObjectLike } from "./types";
 import { RefsInterface } from "./refs-interface";
 import { convertToString } from "./utils";
 
-const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = ({ domainName }, ref) => {
+const getDomain = (domainName: string | undefined, environment: string | undefined): string => {
+	let uri = "";
+	if (environment === "beta") {
+		uri = domainName ? `https://${domainName}.betavisitor.supsis.live/` : "https://betavisitor.supsis.live/";
+	} else if (environment === "prod") {
+		uri = domainName ? `https://${domainName}.visitor.supsis.live/` : "https://visitor.supsis.live/";
+	}
+	return uri;
+};
+
+const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
+	{ domainName, environment = "prod" },
+	ref,
+) => {
 	const webViewRef = useRef<WebView>(null);
-	const uri = `https://${domainName}.visitor.supsis.live`;
+	const uri = getDomain(domainName, environment);
 	const [visible, setVisible] = useState(false);
 	const [loaded, setLoaded] = useState(false);
 	const [buff, setBuff] = useState<Function[]>([]);
@@ -27,26 +40,45 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 		setBuff((prevState) => [...prevState, fn]);
 	};
 
+	const setContactProperty = (payload: ObjectLike) => {
+		const fn = () => inject("set-contact-property", convertToString(payload));
+		if (loaded) {
+			fn();
+		} else {
+			add2Buff(fn);
+		}
+	};
+
 	const setUserData = (payload: ObjectLike) => {
 		const fn = () => inject("set-user-data", convertToString(payload));
-		if (loaded) fn();
-		else add2Buff(fn);
+		if (loaded) {
+			fn();
+		} else {
+			add2Buff(fn);
+		}
 	};
 
 	const setDepartment = (payload: string) => {
 		const fn = () => inject("set-department", `"${payload}"`);
-		if (loaded) fn();
-		else add2Buff(fn);
+		if (loaded) {
+			fn();
+		} else {
+			add2Buff(fn);
+		}
 	};
 
 	const autoLogin = (payload: ObjectLike) => {
 		const body = { initialMessage: "", loginData: JSON.stringify(payload) };
 		const fn = () => inject("auto-login", convertToString(body));
-		if (loaded) fn();
-		else add2Buff(fn);
+		if (loaded) {
+			fn();
+		} else {
+			add2Buff(fn);
+		}
 	};
 
 	useImperativeHandle(ref, () => ({
+		setContactProperty,
 		setUserData,
 		setDepartment,
 		autoLogin,
@@ -56,6 +88,16 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 
 	const onLoadEnd = () => {
 		setTimeout(() => setLoaded(true), 1000);
+	};
+
+	const listenPostMessage = (e: any) => {
+		const { nativeEvent } = e || {};
+		try {
+			const data = JSON.parse(nativeEvent?.data);
+			if (data?.command === "minimize") {
+				setVisible(false);
+			}
+		} catch {}
 	};
 
 	useEffect(() => {
@@ -77,6 +119,7 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 				allowsAirPlayForMediaPlayback
 				allowsFullscreenVideo
 				allowFileAccess
+				onMessage={listenPostMessage}
 			/>
 		</SafeAreaView>
 	);

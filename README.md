@@ -31,9 +31,9 @@ import { RefsInterface, SupsisVisitor } from "@supsis/visitor-rn";
 const supsisRef = useRef < RefsInterface > null;
 
 return (
-	<Container>
-		<SupsisVisitor ref={supsisRef} domainName={"DOMAIN_NAME"} />
-	</Container>
+  <Container>
+    <SupsisVisitor ref={supsisRef} domainName={"DOMAIN_NAME"} />
+  </Container>
 );
 ```
 
@@ -44,6 +44,7 @@ return (
 <tr><td>close</td><td>makes invisible supsis</td></tr>
 <tr><td>setUserData</td><td>fills login form</td></tr>
 <tr><td>setDepartment</td><td>allows you to pick a department</td></tr>
+<tr><td>setContactProperty</td><td>fills contact properties</td></tr>
 </table>
 
 Example:

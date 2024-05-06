@@ -2,8 +2,11 @@
 	"name": "@supsis/visitor-rn",
 	"version": "1.0.2",
 	"license": "MIT",
-	"repository": "git@github:softcand/supsis-visitor-rn",
-	"author": "Buğra Mengi <bumengi94@gmail.com>",
+	"repository": {
+		"type": "git",
+		"url": "git@github:softcand/supsis-visitor-rn"
+	},
+	"author": "Softcand Software <support@supsis.com>",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
 	"files": [
@@ -22,6 +25,10 @@
 		"typescript": "^4.9.4"
 	},
 	"dependencies": {
-		"react-native-webview": "^11.26.0"
+		"react-native-webview": "^13.8.7"
+	},
+	"description": "This is a React Native component to easily add Supsis Visitor screen to your application.",
+	"directories": {
+		"example": "examples"
 	}
 }
