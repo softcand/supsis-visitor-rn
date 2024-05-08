@@ -5,7 +5,6 @@ import { styles } from "./supsis-styles";
 import { PropsInterface } from "./props-interface";
 import { ObjectLike } from "./types";
 import { RefsInterface } from "./refs-interface";
-import { convertToString } from "./utils";
 
 const getDomain = (domainName: string | undefined, environment: string | undefined): string => {
 	let uri = "";
@@ -41,7 +40,7 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 	};
 
 	const setContactProperty = (payload: ObjectLike) => {
-		const fn = () => inject("set-contact-property", convertToString(payload));
+		const fn = () => inject("set-contact-property", JSON.stringify(payload));
 		if (loaded) {
 			fn();
 		} else {
@@ -50,7 +49,7 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 	};
 
 	const setUserData = (payload: ObjectLike) => {
-		const fn = () => inject("set-user-data", convertToString(payload));
+		const fn = () => inject("set-user-data", JSON.stringify(payload));
 		if (loaded) {
 			fn();
 		} else {
@@ -68,8 +67,8 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 	};
 
 	const autoLogin = (payload: ObjectLike) => {
-		const body = { initialMessage: "", loginData: JSON.stringify(payload) };
-		const fn = () => inject("auto-login", convertToString(body));
+		const body = { initialMessage: "", loginData: payload };
+		const fn = () => inject("auto-login", JSON.stringify(body));
 		if (loaded) {
 			fn();
 		} else {
