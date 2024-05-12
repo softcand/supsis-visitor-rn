@@ -96,7 +96,7 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 			const data = JSON.parse(nativeEvent?.data);
 			if (data?.command === "minimize") {
 				setVisible(false);
-			} else if (data?.command === "support-connected") {
+			} else if (data?.command === "visitor-connected") {
 				setConnected(true);
 				onConnected();
 			} else if (data?.command === "visitor-disconnected") {
