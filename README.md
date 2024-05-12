@@ -55,6 +55,33 @@ supsisRef.current?.setUserData({
 });
 ```
 
+### Visitor Connected & Destroyed Chat
+
+```tsx
+import { RefsInterface, SupsisVisitor } from "@supsis/visitor-rn";
+
+const supsisRef = useRef < RefsInterface > null;
+
+
+const onDisconnected: void = () => {
+  console.log("Visitor Disconnected from Chat!");
+};
+
+const onConnected: void = () => {
+  console.log("Visitor Disconnected from Chat!");
+};
+
+return (
+  <Container>
+    <SupsisVisitor
+      ref={supsisRef} 
+      domainName={"DOMAIN_NAME"}
+      onDisconnected={onDisconnected} 
+      onConnected={onConnected} 
+    />
+  </Container>
+);
+```
 ## Support
 
 If you need any help, you can chat with us [here](https://supsis.com/).
