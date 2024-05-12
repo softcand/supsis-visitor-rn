@@ -17,7 +17,7 @@ const getDomain = (domainName: string | undefined, environment: string | undefin
 };
 
 const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
-	{ domainName, environment = "prod" },
+	{ domainName, environment = "prod", onConnected, onDisconnected },
 	ref,
 ) => {
 	const webViewRef = useRef<WebView>(null);
@@ -25,6 +25,7 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 	const [visible, setVisible] = useState(false);
 	const [loaded, setLoaded] = useState(false);
 	const [buff, setBuff] = useState<Function[]>([]);
+	const [connected, setConnected] = useState(false);
 
 	const inject = (cmd: string, payload: ObjectLike | string): void => {
 		const script = `
@@ -95,6 +96,12 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 			const data = JSON.parse(nativeEvent?.data);
 			if (data?.command === "minimize") {
 				setVisible(false);
+			} else if (data?.command === "support-connected") {
+				setConnected(true);
+				onConnected();
+			} else if (data?.command === "visitor-disconnected") {
+				setConnected(false);
+				onDisconnected();
 			}
 		} catch {}
 	};
