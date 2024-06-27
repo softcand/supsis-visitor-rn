@@ -16,6 +16,8 @@ const getDomain = (domainName: string | undefined, environment: string | undefin
 	return uri;
 };
 
+const _noop = () => {
+};
 const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 	{ domainName, environment = "prod", onConnected, onDisconnected },
 	ref,
@@ -97,11 +99,21 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 			if (data?.command === "minimize") {
 				setVisible(false);
 			} else if (data?.command === "visitor-connected") {
+				if (!connected) {
+					if (!onConnected) {
+						onConnected = _noop;
+					}
+					onConnected();
+				}
 				setConnected(true);
-				onConnected();
 			} else if (data?.command === "visitor-disconnected") {
+				if (!onDisconnected) {
+					onDisconnected = _noop;
+				}
+				if (connected) {
+					onDisconnected();
+				}
 				setConnected(false);
-				onDisconnected();
 			}
 		} catch {}
 	};
