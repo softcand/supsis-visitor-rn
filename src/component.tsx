@@ -79,11 +79,21 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 		}
 	};
 
+	const clearCache = () => {
+		const fn = () => inject("auto-login", JSON.stringify("{}"));
+		if (loaded) {
+			fn();
+		} else {
+			add2Buff(fn);
+		}
+	};
+
 	useImperativeHandle(ref, () => ({
 		setContactProperty,
 		setUserData,
 		setDepartment,
 		autoLogin,
+		clearCache,
 		open: () => setVisible(true),
 		close: () => setVisible(false),
 	}));

@@ -45,6 +45,7 @@ return (
 <tr><td>setUserData</td><td>fills login form</td></tr>
 <tr><td>setDepartment</td><td>allows you to pick a department</td></tr>
 <tr><td>setContactProperty</td><td>fills contact properties</td></tr>
+<tr><td>clearCache</td><td>clear visitor data</td></tr>
 </table>
 
 Example:
