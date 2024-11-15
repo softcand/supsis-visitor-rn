@@ -99,7 +99,7 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 	}));
 
 	const onLoadEnd = () => {
-		setTimeout(() => setLoaded(true), 1000);
+		setLoaded(true);
 	};
 
 	const listenPostMessage = (e: any) => {
