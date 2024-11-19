@@ -24,6 +24,10 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Kamera kullanım izni gerekiyor</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Mikrofon kullanım izni gerekiyor</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>

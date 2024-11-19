@@ -12,7 +12,7 @@ export const App: FC = () => {
 
 	return (
 		<View style={{ flex: 1 }}>
-			<SupsisVisitor ref={supsisRef} domainName={"DOMAIN_NAME"} />
+			<SupsisVisitor ref={supsisRef} domainName={"geovision"} />
 		</View>
 	);
 };

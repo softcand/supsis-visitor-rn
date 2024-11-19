@@ -1,6 +1,6 @@
 import React, { forwardRef, ForwardRefRenderFunction, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { SafeAreaView } from "react-native";
-import WebView from "react-native-webview";
+import { SafeAreaView, Platform, PermissionsAndroid } from "react-native";
+import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { styles } from "./supsis-styles";
 import { PropsInterface } from "./props-interface";
 import { ObjectLike } from "./types";
@@ -16,8 +16,8 @@ const getDomain = (domainName: string | undefined, environment: string | undefin
 	return uri;
 };
 
-const _noop = () => {
-};
+const _noop = () => {};
+
 const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 	{ domainName, environment = "prod", onConnected, onDisconnected },
 	ref,
@@ -31,10 +31,11 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 
 	const inject = (cmd: string, payload: ObjectLike | string): void => {
 		const script = `
-				window.postMessage({
-					command: "${cmd}",
-					payload: ${payload},
-				});`;
+		window.postMessage({
+		  command: "${cmd}",
+		  payload: ${payload},
+		});
+	  `;
 		webViewRef.current?.injectJavaScript(script);
 	};
 
@@ -102,7 +103,26 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 		setLoaded(true);
 	};
 
-	const listenPostMessage = (e: any) => {
+	const requestPermissions = async () => {
+		if (Platform.OS === "android") {
+			try {
+				const granted = await PermissionsAndroid.requestMultiple([
+					PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+					PermissionsAndroid.PERMISSIONS.CAMERA,
+				]);
+				if (
+					granted["android.permission.RECORD_AUDIO"] !== PermissionsAndroid.RESULTS.GRANTED ||
+					granted["android.permission.CAMERA"] !== PermissionsAndroid.RESULTS.GRANTED
+				) {
+					console.warn("Kamera ve mikrofon izinleri verilmedi.");
+				}
+			} catch (err) {
+				console.warn(err);
+			}
+		}
+	};
+
+	const listenPostMessage = (e: WebViewMessageEvent) => {
 		const { nativeEvent } = e || {};
 		try {
 			const data = JSON.parse(nativeEvent?.data);
@@ -125,15 +145,21 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 				}
 				setConnected(false);
 			}
-		} catch {}
+		} catch (error) {
+			console.warn("Mesaj işlenirken hata oluştu:", error);
+		}
 	};
 
 	useEffect(() => {
 		if (loaded && buff.length > 0) {
-			buff.map((b) => b());
+			buff.forEach((b) => b());
 			setBuff([]);
 		}
 	}, [loaded]);
+
+	useEffect(() => {
+		requestPermissions();
+	}, []);
 
 	return (
 		<SafeAreaView style={[styles.container, { display: visible ? "flex" : "none" }]}>
@@ -143,11 +169,17 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 				onLoadEnd={onLoadEnd}
 				cacheEnabled
 				javaScriptEnabled
+				domStorageEnabled
 				allowsInlineMediaPlayback
 				allowsAirPlayForMediaPlayback
 				allowsFullscreenVideo
+				mediaPlaybackRequiresUserAction={false}
 				allowFileAccess
 				onMessage={listenPostMessage}
+				mediaCapturePermissionGrantType="grant"
+				onPermissionRequest={(request) => {
+					request.grant(request.resources);
+				}}
 			/>
 		</SafeAreaView>
 	);

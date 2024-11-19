@@ -1,70 +1,133 @@
-node_modules
-.idea
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# OSX
-#
+# OS Generated Files
 .DS_Store
+Thumbs.db
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# React Native cache
+.expo/
+.expo-shared/
+.haul/
+dist/
+build/
+.cache/
+
+# Metro Bundler
+*.pack
+*.map
+*.asset
+index.android.bundle
+index.ios.bundle
+index.windows.bundle
+index.macos.bundle
+index.web.bundle
+
+# Testing
+coverage/
+jest/
+
+# Miscellaneous
+*.swp
+*.swo
+*~
+
+# Build directories
+build/
+public/
+
+# Android
+android/.gradle/
+android/app/build/
+android/build/
+android/app/*.keystore
+android/app/debug.keystore
+android/app/release.keystore
+android/app/src/androidTest/
+android/app/src/test/
+android/local.properties
+android/*.iml
+android/.idea/
+android/app/.cxx/
+android/app/.externalNativeBuild/
+android/app/.vs/
+
+# iOS
+ios/Pods/
+ios/build/
+ios/DerivedData/
+ios/*.xcworkspace
+ios/*.xcodeproj/xcuserdata/
+ios/*.xcodeproj/project.xcworkspace/
+ios/*.xcodeproj/xcshareddata/
+ios/*/*.xcuserstate
+ios/ExpoKitApp.xcworkspace/
+ios/Podfile.lock
 
 # Xcode
-#
-build/
 *.pbxuser
-!default.pbxuser
 *.mode1v3
-!default.mode1v3
 *.mode2v3
-!default.mode2v3
 *.perspectivev3
-!default.perspectivev3
-xcuserdata
+xcuserdata/
+xcdebugger/
+*.xcscmblueprint
 *.xccheckout
 *.moved-aside
-DerivedData
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+fastlane/readme.md
+
+# Bundler
+/vendor/bundle/
+.bundle/
+
+# CocoaPods
 *.hmap
 *.ipa
 *.xcuserstate
-ios/.xcode.env.local
+Pods/
+podfile.lock
 
-# Android/IntelliJ
-#
-build/
-.idea
-.gradle
-local.properties
-*.iml
-*.hprof
-.cxx/
+# Build artifacts
+*.jsbundle
 
-# BUCK
-buck-out/
-\.buckd/
-*.keystore
-!debug.keystore
-
-# Ruby / CocoaPods
-/ios/Pods/
-/vendor/bundle/
-
-# node.js
-#
-node_modules/
+# NPM Packages
 npm-debug.log
 yarn-error.log
 
+# Expo
+.expo/
+.expo-shared/
 
-# fastlane
-#
-# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
-# screenshots whenever they are needed.
-# For more information about the recommended setup visit:
-# https://docs.fastlane.tools/best-practices/source-control/
+# VSCode
+.vscode/
+.history/
 
-**/fastlane/report.xml
-**/fastlane/Preview.html
-**/fastlane/screenshots
-**/fastlane/test_output
+# Misc
+*.iml
+*.keystore
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
 
-# Bundle artifact
-*.jsbundle
+# Temporary files
+tmp/
+temp/
 
-lib
+# IntelliJ
+*.idea/
