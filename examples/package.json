@@ -8,7 +8,7 @@
 		"start": "react-native start"
 	},
 	"dependencies": {
-		"@supsis/visitor-rn": "^1.0.0",
+		"@supsis/visitor-rn": "*",
 		"react": "18.1.0",
 		"react-native": "0.70.6",
 		"react-native-webview": "^11.26.0"

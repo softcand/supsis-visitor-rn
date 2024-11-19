@@ -1,6 +1,6 @@
 import React, { forwardRef, ForwardRefRenderFunction, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { SafeAreaView, Platform, PermissionsAndroid } from "react-native";
-import WebView, { WebViewMessageEvent } from "react-native-webview";
+import WebView, { WebViewMessageEvent, PermissionRequest } from "react-native-webview";
 import { styles } from "./supsis-styles";
 import { PropsInterface } from "./props-interface";
 import { ObjectLike } from "./types";
@@ -177,7 +177,7 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 				allowFileAccess
 				onMessage={listenPostMessage}
 				mediaCapturePermissionGrantType="grant"
-				onPermissionRequest={(request) => {
+				onPermissionRequest={(request: PermissionRequest) => {
 					request.grant(request.resources);
 				}}
 			/>

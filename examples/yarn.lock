@@ -1322,7 +1322,7 @@
   "resolved" "https://registry.npmjs.org/@sideway/pinpoint/-/pinpoint-2.0.0.tgz"
   "version" "2.0.0"
 
-"@supsis/visitor-rn@^1.0.0":
+"@supsis/visitor-rn@*":
   "integrity" "sha512-veEogm8nATki9q7irxMDLtjyGvtzsiX9YPaeF6b6a0YCTvQKDgy69x0gxMkxWmGqX9yg4pNzIoe0oq8/Dz3PYg=="
   "resolved" "https://registry.npmjs.org/@supsis/visitor-rn/-/visitor-rn-1.0.1.tgz"
   "version" "1.0.1"
