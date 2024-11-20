@@ -5,11 +5,11 @@ This is a React Native component to easily add Supsis Visitor screen to your app
 ## Installation
 
 ```sh
-npm install @supsis/visitor-rn react-native-webview@^13.6.4
+npm install @supsis/visitor-rn react-native-webview@^13.12.4
 
 or
 
-yarn add @supsis/visitor-rn react-native-webview@^13.6.4
+yarn add @supsis/visitor-rn react-native-webview@^13.12.4
 ```
 
 ## Prerequisites
