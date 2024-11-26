@@ -23,11 +23,15 @@ yarn add @supsis/visitor-rn react-native-webview@^13.12.4
 <string>Microphone access is required for live video calls</string>
 ```
 
--   Android - Add the following permissions to your AndroidManifest.xml file:
+-   Android - Add the following permissions to your AndroidManifest.xml file(Most of using for video & audio chat ):
 
 ```xml
-<uses-permission android:name="android.permission.RECORD_AUDIO" />
-<uses-permission android:name="android.permission.CAMERA" />
+ 	<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
 
 ```
 
