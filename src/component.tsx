@@ -1,5 +1,5 @@
 import React, { forwardRef, ForwardRefRenderFunction, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { SafeAreaView, Platform, PermissionsAndroid } from "react-native";
+import { SafeAreaView, Platform, PermissionsAndroid, KeyboardAvoidingView } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { styles } from "./supsis-styles";
 import { PropsInterface } from "./props-interface";
@@ -168,32 +168,34 @@ const SupsisVisitor: ForwardRefRenderFunction<RefsInterface, PropsInterface> = (
 	}, []);
 
 	return (
-		<SafeAreaView style={[styles.container, { display: visible ? "flex" : "none" }]}>
-			<WebView
-				ref={webViewRef}
-				source={{ uri }}
-				onLoadEnd={onLoadEnd}
-				cacheEnabled
-				javaScriptEnabled
-				domStorageEnabled
-				allowsInlineMediaPlayback
-				allowsAirPlayForMediaPlayback
-				allowsFullscreenVideo
-				mediaPlaybackRequiresUserAction={false}
-				allowFileAccess
-				onMessage={listenPostMessage}
-				mediaCapturePermissionGrantType="grant"
-				{...(Platform.OS === "android" && {
-					onPermissionRequest: (request: PermissionRequest) => {
-						try {
-							request.grant(request.resources);
-						} catch (error) {
-							console.warn("İzin isteği işlenirken hata oluştu:", error);
-						}
-					},
-				})}
-			/>
-		</SafeAreaView>
+		<KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : undefined}>
+			<SafeAreaView style={[styles.container, { display: visible ? "flex" : "none" }]}>
+				<WebView
+					ref={webViewRef}
+					source={{ uri }}
+					onLoadEnd={onLoadEnd}
+					cacheEnabled
+					javaScriptEnabled
+					domStorageEnabled
+					allowsInlineMediaPlayback
+					allowsAirPlayForMediaPlayback
+					allowsFullscreenVideo
+					mediaPlaybackRequiresUserAction={false}
+					allowFileAccess
+					onMessage={listenPostMessage}
+					mediaCapturePermissionGrantType="grant"
+					{...(Platform.OS === "android" && {
+						onPermissionRequest: (request: PermissionRequest) => {
+							try {
+								request.grant(request.resources);
+							} catch (error) {
+								console.warn("İzin isteği işlenirken hata oluştu:", error);
+							}
+						},
+					})}
+				/>
+			</SafeAreaView>
+		</KeyboardAvoidingView>
 	);
 };
 
