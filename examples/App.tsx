@@ -7,12 +7,21 @@ export const App: FC = () => {
 
 	useEffect(() => {
 		supsisRef.current?.open();
-		supsisRef.current?.setUserData({ fullname: "John Doe", email: "john@doe.com" });
-	}, [supsisRef.current]);
+		supsisRef.current?.setUserData({
+			fullname: "Samed Doe",
+			email: "samed@doe.com",
+			department: "SUPSIS AI MOBILE",
+		});
+	}, [supsisRef]);
+
+	const handleMinimize = () => {
+		// burada widget kapatılabilir veya istenen aksiyon alınabilir.
+		console.log("Chat widget minimized");
+	};
 
 	return (
 		<View style={{ flex: 1 }}>
-			<SupsisVisitor ref={supsisRef} domainName={"geovision"} />
+			<SupsisVisitor ref={supsisRef} domainName="geovision" onMinimize={handleMinimize} />
 		</View>
 	);
 };
